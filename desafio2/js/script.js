@@ -5,6 +5,20 @@
 4. Devuelve el precio de la estadía según el mes de estadía 
 */ 
 
+// Creación de objetos "HABITACIONES"
+
+class Habitacion {
+    constructor(categoria, tarifaBaja, tarifaAlta){
+        this.categoria = categoria;
+        this.tarifaBaja = tarifaBaja;
+        this.tarifaAlta = tarifaAlta;
+    }
+}
+
+const standard = new Habitacion("standard", 110, 90);
+const superior = new Habitacion("superior", 110, 140);
+const suite = new Habitacion("suite", 150, 300);
+
 // Bienvenida
 let saludar = nombre => alert("Hola " + nombre + ". Vamos a hacerte unas preguntas para cotizar tu estadía.");
 
@@ -18,15 +32,12 @@ categoria = solicitarCategoria();
 // Elegir fecha de llegada - Se extrae el mes
 
 let fechaLlegada = prompt("Muchas gracias. Ahora por favor indicanos desde cuando querés hospedarte, en formato DD/MM/AAAA");
-console.log(fechaLlegada);
 
 while (fechaLlegada.length != 10 || !(parseInt(fechaLlegada[3] + fechaLlegada[4]))){
     fechaLlegada = prompt("Disculpas. No entiendo la fecha que ingresaste. Por favor, ingresar una fecha con el formato DD/MM/AAAA");
 };
 
-
 let mes = parseInt(fechaLlegada[3] + fechaLlegada[4]);
-console.log("Mes ingresado: " + mes);
 
 // Elegir cantidad de noches
 
@@ -49,58 +60,47 @@ alert(nombre + ", el total por una estadía de " + cantidadNoches + " " + noches
 // Declaración de funciones
 
 function solicitarCategoria(){
-    categoria = prompt("En qué categoría de habitación querrías alojarte.\n Ingresá el nombre:\n - Standard\n - Superior\n - Suite");
-    switch (categoria){
-        case "Standard":
-        case "standard":
-            return "Standard";
-            break;
-        case "Superior":
-        case "superior":
-            return "Superior";
-            break;
-        case "Suite":
-        case "suite":
-            return "Suite";
-            break;
-        default:
-            solicitarCategoria();
-            break;        
+    do{
+        categoria = prompt("En qué categoría de habitación querrías alojarte.\n Ingresá el nombre:\n - Standard\n - Superior\n - Suite").toLowerCase();
     }
+    while (!(categoria == "standard" || categoria == "superior" || categoria == "suite"));
+    return categoria;
 }
 
 function buscarTarifa (mes, categoria){
     switch(categoria){
-        case "Standard":
+        case "standard":
             // Temporada Alta
             if(mes < 5 || mes > 9){
-                return 110;
+                return standard.tarifaAlta;
             }
             // Temporada Baja
             else{
-                return 90;
+                return standard.tarifaBaja;
             }
             break;
-        case "Superior":
+        case "superior":
             if(mes < 5 || mes > 9){
-                return 140;
+                return superior.tarifaAlta;
             }
             // Temporada Baja
             else{
-                return 110;
+                return superior.tarifaBaja;
             }
             break;
-        case "Suite":
+        case "suite":
             if(mes < 5 || mes > 9){
-                return 200;
+                return suite.tarifaAlta;
             }
             // Temporada Baja
             else{
-                return 150;
+                return suite.tarifaBaja;
             }
             break;
     }
 }
+
 function calcularTotal (noches, tarifa){
     return noches * tarifa;
 }
+
