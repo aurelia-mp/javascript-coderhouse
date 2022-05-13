@@ -107,7 +107,7 @@ class Reserva {
 }
 
 // Confirmar reserva
-let confirmacion = prompt("Desea confirmar la reserva? S / N");
+let confirmacion = prompt("Desea confirmar la reserva? S / N").toUpperCase();
 
 if (confirmacion == "S"){
     let pasajero = prompt("Ingresa tu nombre completo: ");
